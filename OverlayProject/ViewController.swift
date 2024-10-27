@@ -7,9 +7,12 @@
 
 import Cocoa
 import AppKit
+import RiveRuntime
+import SnapKit
 
 class ViewController: NSWindowController {
     
+    let overlayRive = RiveViewModel(fileName: "overlay_notification", artboardName: "sad")
     
     convenience init() {
         let screenFrame = NSScreen.main?.frame ?? NSRect(x: 0, y: 0, width: 800, height: 600)
@@ -30,7 +33,7 @@ class ViewController: NSWindowController {
         
         self.init(window: overlayWindow)
         setupOverlayContent()
-//        showOverlay()
+        //        showOverlay()
     }
     
     private func setupOverlayContent() {
@@ -42,12 +45,20 @@ class ViewController: NSWindowController {
         overlayView.layer?.backgroundColor = NSColor.black.withAlphaComponent(0.7).cgColor
         window?.contentView?.addSubview(overlayView)
         
-        // Gambar untuk karakter
-        let imageView = NSImageView()
-        imageView.image = NSImage(named: "Male")
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.imageScaling = .scaleAxesIndependently
-        overlayView.addSubview(imageView)
+        //        // Gambar untuk karakter
+        //        let imageView = NSImageView()
+        //        imageView.image = NSImage(named: "Male")
+        //        imageView.translatesAutoresizingMaskIntoConstraints = false
+        //        imageView.imageScaling = .scaleAxesIndependently
+        //        overlayView.addSubview(imageView)
+        
+        // Rive Animation View
+        let riveView = overlayRive.createRiveView()
+        riveView.layer?.borderColor = .white
+        riveView.layer?.borderWidth = 1
+        riveView.translatesAutoresizingMaskIntoConstraints = false
+        riveView.frame = overlayView.bounds
+        overlayView.addSubview(riveView)
         
         // Background View untuk teks dan tombol
         let textBackgroundView = NSView()
@@ -74,33 +85,75 @@ class ViewController: NSWindowController {
         dismissButton.translatesAutoresizingMaskIntoConstraints = false
         textBackgroundView.addSubview(dismissButton)
         
-        // Constraints untuk posisi elemen-elemen
-        NSLayoutConstraint.activate([
-            // ImageView
-            imageView.leadingAnchor.constraint(equalTo: overlayView.leadingAnchor, constant: 50),
-            imageView.bottomAnchor.constraint(equalTo: overlayView.bottomAnchor, constant: 50),
-            imageView.widthAnchor.constraint(equalToConstant: 300),
-            imageView.heightAnchor.constraint(equalToConstant: 600),
-            
-            // Background View
-            textBackgroundView.leadingAnchor.constraint(equalTo: imageView.leadingAnchor),
-            textBackgroundView.bottomAnchor.constraint(equalTo: imageView.topAnchor, constant: -20),
-            textBackgroundView.widthAnchor.constraint(equalToConstant: 220),
-            textBackgroundView.heightAnchor.constraint(equalToConstant: 90),
-            
-            // Speech Bubble (NSTextField)
-            speechBubble.leadingAnchor.constraint(equalTo: textBackgroundView.leadingAnchor, constant: 10),
-            speechBubble.topAnchor.constraint(equalTo: textBackgroundView.topAnchor, constant: 10),
-            
-            // Dismiss Button
-            dismissButton.trailingAnchor.constraint(equalTo: textBackgroundView.trailingAnchor, constant: -10),
-            dismissButton.bottomAnchor.constraint(equalTo: textBackgroundView.bottomAnchor, constant: -10),
-        ])
+//        // Constraints untuk posisi elemen-elemen
+//        NSLayoutConstraint.activate([
+//            // ImageView
+//            //            imageView.leadingAnchor.constraint(equalTo: overlayView.leadingAnchor, constant: 50),
+//            //            imageView.bottomAnchor.constraint(equalTo: overlayView.bottomAnchor, constant: 50),
+//            //            imageView.widthAnchor.constraint(equalToConstant: 300),
+//            //            imageView.heightAnchor.constraint(equalToConstant: 600),
+//            // Rive Animation View
+//            riveView.leadingAnchor.constraint(equalTo: overlayView.leadingAnchor, constant: 50),
+//            riveView.bottomAnchor.constraint(equalTo: overlayView.bottomAnchor, constant: 50),
+//            riveView.widthAnchor.constraint(equalToConstant: 300),
+//            riveView.heightAnchor.constraint(equalToConstant: 600),
+//            
+//            // Background View
+//            textBackgroundView.leadingAnchor.constraint(equalTo: riveView.leadingAnchor),
+//            textBackgroundView.bottomAnchor.constraint(equalTo: riveView.topAnchor, constant: -20),
+//            textBackgroundView.widthAnchor.constraint(equalToConstant: 220),
+//            textBackgroundView.heightAnchor.constraint(equalToConstant: 90),
+//            
+//            // Speech Bubble (NSTextField)
+//            speechBubble.leadingAnchor.constraint(equalTo: textBackgroundView.leadingAnchor, constant: 10),
+//            speechBubble.topAnchor.constraint(equalTo: textBackgroundView.topAnchor, constant: 10),
+//            
+//            // Dismiss Button
+//            dismissButton.trailingAnchor.constraint(equalTo: textBackgroundView.trailingAnchor, constant: -10),
+//            dismissButton.bottomAnchor.constraint(equalTo: textBackgroundView.bottomAnchor, constant: -10),
+//        ])
+        
+        // ImageView
+        // imageView.snp.makeConstraints { make in
+        //     make.leading.equalTo(overlayView).offset(50)
+        //     make.bottom.equalTo(overlayView).offset(50)
+        //     make.width.equalTo(300)
+        //     make.height.equalTo(600)
+        // }
+
+        // Rive Animation View
+        riveView.snp.makeConstraints { make in
+            make.leading.equalTo(overlayView).offset(50)
+            make.bottom.equalTo(overlayView).offset(50)
+            make.width.equalTo(300)
+            make.height.equalTo(600)
+//            make.edges.equalToSuperview()
+        }
+
+        // Background View
+        textBackgroundView.snp.makeConstraints { make in
+            make.leading.equalTo(riveView.snp.leading)
+            make.bottom.equalTo(riveView.snp.top).offset(-20)
+            make.width.equalTo(220)
+            make.height.equalTo(90)
+        }
+
+        // Speech Bubble (NSTextField)
+        speechBubble.snp.makeConstraints { make in
+            make.leading.equalTo(textBackgroundView).offset(10)
+            make.top.equalTo(textBackgroundView).offset(10)
+        }
+
+        // Dismiss Button
+        dismissButton.snp.makeConstraints { make in
+            make.trailing.equalTo(textBackgroundView).offset(-10)
+            make.bottom.equalTo(textBackgroundView).offset(-10)
+        }
     }
     
     func showOverlay() {
         guard let overlayWindow = self.window else { return }
-
+        
         overlayWindow.setFrame(NSScreen.main?.frame ?? overlayWindow.frame, display: false)
         NSApp.runModal(for: overlayWindow)
         overlayWindow.alphaValue = 0

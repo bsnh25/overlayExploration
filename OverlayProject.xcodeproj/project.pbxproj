@@ -6,6 +6,11 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		030623AB2CCDE58900BE5A4E /* RiveRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = 030623AA2CCDE58900BE5A4E /* RiveRuntime */; };
+		030623AE2CCDE96F00BE5A4E /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 030623AD2CCDE96F00BE5A4E /* SnapKit */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		039645F92CC7E206006524DE /* OverlayProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OverlayProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -23,6 +28,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				030623AB2CCDE58900BE5A4E /* RiveRuntime in Frameworks */,
+				030623AE2CCDE96F00BE5A4E /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +72,8 @@
 			);
 			name = OverlayProject;
 			packageProductDependencies = (
+				030623AA2CCDE58900BE5A4E /* RiveRuntime */,
+				030623AD2CCDE96F00BE5A4E /* SnapKit */,
 			);
 			productName = OverlayProject;
 			productReference = 039645F92CC7E206006524DE /* OverlayProject.app */;
@@ -94,6 +103,10 @@
 			);
 			mainGroup = 039645F02CC7E206006524DE;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				030623A92CCDE58900BE5A4E /* XCRemoteSwiftPackageReference "rive-ios" */,
+				030623AC2CCDE96F00BE5A4E /* XCRemoteSwiftPackageReference "SnapKit" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 039645FA2CC7E206006524DE /* Products */;
 			projectDirPath = "";
@@ -317,6 +330,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		030623A92CCDE58900BE5A4E /* XCRemoteSwiftPackageReference "rive-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/rive-app/rive-ios.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.2.1;
+			};
+		};
+		030623AC2CCDE96F00BE5A4E /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.7.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		030623AA2CCDE58900BE5A4E /* RiveRuntime */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 030623A92CCDE58900BE5A4E /* XCRemoteSwiftPackageReference "rive-ios" */;
+			productName = RiveRuntime;
+		};
+		030623AD2CCDE96F00BE5A4E /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 030623AC2CCDE96F00BE5A4E /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 039645F12CC7E206006524DE /* Project object */;
 }
