@@ -10,7 +10,7 @@ import Cocoa
 
 class MainVC: NSViewController {
     
-    var overlayController: ViewController?
+//    var overlayController: ViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,9 +23,13 @@ class MainVC: NSViewController {
     override func viewDidAppear() {
         super.viewDidAppear()
         
-        overlayController = ViewController()
-//        overlayController?.showWindow(nil)
-        overlayController?.showOverlay()
+//        overlayController = ViewController()
+////        overlayController?.showWindow(nil)
+//        overlayController?.showOverlay()
+        
+        let overlay = NotificationOverlayWindow()
+        overlay.addViewContoller(NotificationOverlayViewController())
+        overlay.show()
     }
     
 }

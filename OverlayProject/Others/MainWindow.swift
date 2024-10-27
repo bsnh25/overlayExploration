@@ -10,7 +10,7 @@ import Cocoa
 
 class MainWindow: NSWindow {
     
-    var viewController: ViewController?
+//    var viewController: ViewController?
     
     init() {
         super.init(
